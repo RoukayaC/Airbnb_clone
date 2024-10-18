@@ -20,8 +20,10 @@ mongoose
 // Use the users routes for authentication
 app.use("/api/user", users);
 
+// Set the port and host
 const port = process.env.PORT || 3000;
+const host = "0.0.0.0"; 
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.listen(port, host, () => {
+  console.log(`Server running on http://${host}:${port}`);
 });
