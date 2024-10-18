@@ -7,14 +7,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-const cors = require("cors");
-app.use(
-  cors({
-    origin: "https://frontend-kappa-ten-65.vercel.app",
-    methods: ["POST", "GET", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors());
 
 // Connect to MongoDB
 const mongo_url = config.get("mongo_url");
