@@ -10,12 +10,20 @@ app.use(express.json());
 app.use(cors());
 
 // Connect to MongoDB
-const mongo_url = config.get("mongo_url");
-mongoose.set("strictQuery", true);
-mongoose
-  .connect(mongo_url)
-  .then(() => console.log("MongoDB connected..."))
-  .catch((err) => console.log(err));
+const connectDB = async () => {
+  try {
+    const mongo_url = config.get("mongo_url");
+    mongoose.set("strictQuery", true);
+    await mongoose.connect(mongo_url);
+    console.log("MongoDB connected...");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    process.exit(1); // Exit process with failure
+  }
+};
+
+// Call the function to connect to the database
+connectDB();
 
 // Use the users routes for authentication
 app.use("/api/user", users);
@@ -24,6 +32,7 @@ app.use("/api/user", users);
 const port = process.env.PORT || 3000;
 const host = "0.0.0.0";
 
+// Start the server
 app.listen(port, host, () => {
   console.log(`Server running on http://${host}:${port}`);
 });

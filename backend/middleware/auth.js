@@ -1,7 +1,7 @@
 const config = require("config");
 const jwt = require("jsonwebtoken");
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
   const token = req.header("x-auth-token");
 
   if (!token) {
@@ -9,7 +9,7 @@ const auth = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const decoded = await jwt.verify(token, config.get("jwtSecret"));
     req.userid = decoded.id;
     next(); 
   } catch (error) {
