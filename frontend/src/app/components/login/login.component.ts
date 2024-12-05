@@ -20,12 +20,20 @@ export class LoginComponent {
         (response) => {
           // Store the token in local storage
           localStorage.setItem('token', response.token);
-          // Redirect to the dashboard after successful login
-          this.router.navigate(['/dashboard']); // Adjust the path based on your routing configuration
+  
+          // Redirect based on role
+          if (response.role === 'owner') {
+            this.router.navigate(['/owner-dashboard']);
+          } else if (response.role === 'user') {
+            this.router.navigate(['/user-dashboard']);
+          } else {
+            this.router.navigate(['/dashboard']); // Default fallback
+          }
         },
         (error) => {
           console.error('Login failed', error);
         }
       );
   }
+  
 }

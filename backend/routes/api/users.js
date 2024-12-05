@@ -82,17 +82,20 @@ router.post("/login", async (req, res) => {
     }
 
     // Generate JWT token if credentials are valid
-    const token = jwt.sign({ id: user.id }, config.get("jwtSecret"), {
-      expiresIn: config.get("tokenExpire"),
-    });
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      config.get("jwtSecret"),
+      { expiresIn: config.get("tokenExpire") }
+    );
 
     // Send response with token and user details
     res.status(200).json({
       status: "ok",
       msg: "Successfully logged in",
       token,
-      user,
+      role: user.role, 
     });
+    
   } catch (err) {
     return res
       .status(500)
