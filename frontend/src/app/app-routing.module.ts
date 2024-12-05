@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirect to login by default
   { path: 'dashboard', component: DashboardComponent },
+  
 
 ];
 
